@@ -110,9 +110,22 @@ const getMyUser = (req, res) => {
 const patchMyUser = (req, res) => {
   const id = req.user.id;
 
-  const { firstName, lastName, phone, gender, country, email, password } =
-    req.body;
-  if (firstName || lastName || phone || gender || country || email) {
+  const {
+    firstName,
+    lastName,
+    phone,
+    gender,
+    country,
+    birthday,
+  } = req.body;
+  if (
+    firstName ||
+    lastName ||
+    phone ||
+    gender ||
+    country ||
+    birthday
+  ) {
     usersControllers
       .updateUser(id, {
         firstName,
@@ -120,9 +133,8 @@ const patchMyUser = (req, res) => {
         phone,
         gender,
         country,
-        email,
+        birthday,
       })
-
       .then((data) => {
         res
           .status(200)
@@ -137,8 +149,6 @@ const patchMyUser = (req, res) => {
       fields: {
         firstName: "string",
         lastName: "string",
-        email: "example@gmail.com",
-        password: "string",
         phone: "+59892525648",
         birthday: "YYYY/MM/DD",
       },
@@ -146,17 +156,32 @@ const patchMyUser = (req, res) => {
   }
 };
 
+//? esta una forma
+// const deleteMyUser = (req, res) => {
+//   const id = req.user.id; //? req.user => informacion del token desencriptado
+//   usersControllers
+//     .deleteUser(id)
+//     .then(() => {
+//       res.status(201).json();
+//     })
+//     .catch((err) => {
+//       res.status(400).json({ message: err.message });
+//     });
+// };
+
+//? esta es la manera correcta
 const deleteMyUser = (req, res) => {
-  const id = req.user.id; //? req.user => informacion del token desencriptado
-  usersControllers
-    .deleteUser(id)
-    .then(() => {
-      res.status(201).json();
-    })
-    .catch((err) => {
-      res.status(400).json({ message: err.message });
-    });
+  const id = req.user.id;
+
+  usersControllers.updateUser(id, { status: "inactive" })
+      .then(() => {
+        res.status(200).json({ message: `Your user was deleted succesfully!` });
+      })
+      .catch((err) => {
+        res.status(400).json({ message: err.message });
+      });
 };
+
 
 //todo 37 => router
 module.exports = {
@@ -167,5 +192,5 @@ module.exports = {
   registerUser,
   getMyUser,
   patchMyUser,
-  deleteMyUser
+  deleteMyUser,
 };

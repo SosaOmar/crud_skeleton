@@ -7,7 +7,11 @@ const { hashPassword } = require("../utils/crypto");
 
 //todo 20.1 (all controllers)
 const getAllUsers = async () => {
-  const data = await Users.findAll();
+  const data = await Users.findAll({
+    where: {
+      status: "active",
+    },
+  });
   return data;
 };
 
@@ -16,6 +20,7 @@ const getUserById = async (id) => {
   const data = await Users.findOne({
     where: {
       id: id,
+      status: "active",
     },
   });
 
@@ -45,7 +50,7 @@ const updateUser = async (id, data) => {
       id: id,
     },
   });
-  
+
   return result;
 };
 
@@ -65,7 +70,8 @@ const deleteUser = async (id) => {
 const getUserByEmail = async (email) => {
   const data = await Users.findOne({
     where: {
-      email,
+      email:email,
+      status:"active"
     },
   });
 
