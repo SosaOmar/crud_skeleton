@@ -24,6 +24,8 @@ const userRouter = require("./users/users.router");
 //TODO 56
 const authRouter = require("./auth/auth.router");
 
+const initModels = require("./models/initModels");
+
 //TODO 51
 db.authenticate()
   .then(() => {
@@ -40,6 +42,8 @@ db.sync()
   .catch((err) => {
     console.log(err);
   });
+
+initModels(); //? tiene que ir despues de authenticate y sync
 
 //TODO 52 crear base de datos en dbeaver ir a .env
 

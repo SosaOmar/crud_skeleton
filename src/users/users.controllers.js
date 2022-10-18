@@ -70,8 +70,8 @@ const deleteUser = async (id) => {
 const getUserByEmail = async (email) => {
   const data = await Users.findOne({
     where: {
-      email:email,
-      status:"active"
+      email: email,
+      status: "active",
     },
   });
 

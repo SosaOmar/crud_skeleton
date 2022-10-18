@@ -1,6 +1,8 @@
 //todo 38
 const router = require("express").Router();
 
+//todo 103
+const adminValidate = require("../middlewares/role.middlewares");
 const { session } = require("passport");
 //TODO 74 Para rutas protegidas (74,75)
 const passport = require("passport");
@@ -44,8 +46,17 @@ router
 router
   .route("/:id")
   .get(usersService.getUserById)
-  .patch(usersService.patchUser)
-  .delete(usersService.deleteUser);
+  //TODO 100 => role.middlewares.js
+  .patch(
+    passport.authenticate("jwt", { session: false }),
+    adminValidate,
+    usersService.patchUser
+  )
+  .delete(
+    passport.authenticate("jwt", { session: false }),
+    adminValidate, //? esto valida si es administrador es un middleware
+    usersService.deleteUser
+  );
 
 //todo 41 => app.js
 module.exports = router;

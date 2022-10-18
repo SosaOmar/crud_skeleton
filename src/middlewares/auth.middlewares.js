@@ -5,7 +5,7 @@
 //TODO 66
 const JwtStrategy = require("passport-jwt").Strategy; //? maneja estrategias para las autenticaciones (formas de autenticarse), como cuando inicias sesion en una pagina con tu cuenta de google, facebook
 
-//TODO 72 
+//TODO 72
 const { jwtSecret } = require("../config");
 
 //TODO 73 => users.router

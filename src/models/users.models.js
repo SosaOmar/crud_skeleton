@@ -67,4 +67,4 @@ const Users = db.define("users", {
 });
 
 //todo 18 => ir a controllers
-module.exports = Users
+module.exports = Users;

@@ -85,7 +85,7 @@ const registerUser = (req, res) => {
       fields: {
         firstName: "string",
         lastName: "string",
-        email: "examplete@gmail.com",
+        email: "example@gmail.com",
         password: "string",
         phone: "+59892525648",
         birthday: "YYYY/MM/DD",
@@ -110,22 +110,8 @@ const getMyUser = (req, res) => {
 const patchMyUser = (req, res) => {
   const id = req.user.id;
 
-  const {
-    firstName,
-    lastName,
-    phone,
-    gender,
-    country,
-    birthday,
-  } = req.body;
-  if (
-    firstName ||
-    lastName ||
-    phone ||
-    gender ||
-    country ||
-    birthday
-  ) {
+  const { firstName, lastName, phone, gender, country, birthday } = req.body;
+  if (firstName || lastName || phone || gender || country || birthday) {
     usersControllers
       .updateUser(id, {
         firstName,
@@ -173,15 +159,15 @@ const patchMyUser = (req, res) => {
 const deleteMyUser = (req, res) => {
   const id = req.user.id;
 
-  usersControllers.updateUser(id, { status: "inactive" })
-      .then(() => {
-        res.status(200).json({ message: `Your user was deleted succesfully!` });
-      })
-      .catch((err) => {
-        res.status(400).json({ message: err.message });
-      });
+  usersControllers
+    .updateUser(id, { status: "inactive" })
+    .then(() => {
+      res.status(200).json({ message: `Your user was deleted succesfully!` });
+    })
+    .catch((err) => {
+      res.status(400).json({ message: err.message });
+    });
 };
-
 
 //todo 37 => router
 module.exports = {
