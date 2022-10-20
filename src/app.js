@@ -19,10 +19,13 @@ const { port } = require("./config");
 //TODO 50
 const db = require("./utils/database");
 
-//todo 42
 const userRouter = require("./users/users.router");
-//TODO 56
+
 const authRouter = require("./auth/auth.router");
+
+const categoryRouter = require("./categories/categories.router");
+
+const postsRouter = require("./posts/posts.router");
 
 const initModels = require("./models/initModels");
 
@@ -45,17 +48,12 @@ db.sync()
 
 initModels(); //? tiene que ir despues de authenticate y sync
 
-//TODO 52 crear base de datos en dbeaver ir a .env
-
 //! Configuraciones iniciales
 
-//todo 2
 const app = express();
 
-//todo 3
 app.use(express.json());
 
-//todo 5 => ir a config.js
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "OK!",
@@ -63,13 +61,14 @@ app.get("/", (req, res) => {
   });
 });
 
-//todo 43
 app.use("/api/v1/users", userRouter);
 
-//TODO 57 => creamos un usuario en la base
 app.use("/api/v1/auth", authRouter);
 
-//todo 4
+app.use("/api/v1/categories", categoryRouter);
+
+app.use("/api/v1/posts", postsRouter);
+
 app.listen(port, () => {
   console.log(`Server started at port ${port}`);
 });
